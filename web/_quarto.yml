@@ -1,0 +1,50 @@
+project:
+  type: website
+  output-dir: docs
+  resources:
+    - events.json
+
+website:
+  title: "Johnstone Park Combined Club Rooms"
+  description: "The clubrooms host various local community organizations and clubs"
+  navbar:
+    background: "#b42318"
+    foreground: white
+    left:
+      - text: Home
+        href: index.qmd
+      - text: News
+        href: news.qmd
+      - text: Clubs
+        href: clubs.qmd
+      - text: Events
+        href: events.qmd
+      - text: History
+        href: history.qmd
+      - text: Murray Bridge News
+        href: mb-news.qmd
+  sidebar:
+    style: docked
+    background: light
+    contents:
+      - section: "Shortcuts"
+        contents:
+          - clubs.qmd
+          - news.qmd
+          - history.qmd
+          - events.qmd
+  page-footer:
+    left: "2026 — Johnstone Park Combined Club Rooms"
+    right: ""
+  search: true
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    link-external-newwindow: true
+    html-math-method: katex
+    include-in-header:
+      text: |
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📡</text></svg>">

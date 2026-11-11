@@ -1,2 +1,0 @@
-# jpcc
-Main web page

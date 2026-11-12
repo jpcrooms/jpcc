@@ -25,6 +25,8 @@ website:
         href: clubs.qmd
       - text: Events
         href: events.qmd
+      - text: Room Hire
+        href: room-hire.qmd
       - text: History
         href: history.qmd
       - text: Murray Bridge News
@@ -39,6 +41,7 @@ website:
           - news.qmd
           - history.qmd
           - events.qmd
+          - room-hire.qmd
   page-footer:
     left: "2026 — Johnstone Park Combined Club Rooms"
     right: ""

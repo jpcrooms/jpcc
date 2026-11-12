@@ -1,0 +1,141 @@
+---
+title: "Room Hire"
+subtitle: "Johnstone Park Combined Club Rooms — Murray Bridge"
+toc: false
+---
+
+The clubrooms at **12 Thomas Street, Murray Bridge SA 5253** are available for hire. You can request either of our two halls using the enquiry form below.
+
+## Choose a hall
+
+```{=html}
+<div class="room-hire-options" aria-label="Available halls">
+  <section class="room-hire-option">
+    <h3>Large Hall</h3>
+    <p class="room-hire-capacity">Up to 80 people seated</p>
+    <p>Suitable for larger functions, workshops and community gatherings.</p>
+  </section>
+  <section class="room-hire-option">
+    <h3>Small Hall</h3>
+    <p class="room-hire-capacity">Up to 25 people seated</p>
+    <p>Suitable for smaller meetings, board games and club catch-ups.</p>
+  </section>
+</div>
+```
+
+### Included facilities
+
+Use of the kitchen, wheelchair-accessible entrances, accessible toilets and accessible parking is included with hall hire.
+
+### Fees
+
+Standard hall hire rates apply. An **additional cleaning fee** may be charged if required. Please submit an enquiry for the applicable fees and confirmation of availability.
+
+## Request a room hire
+
+Complete the form to send a **booking enquiry** to the clubrooms committee. We will need to confirm availability, fees and your booking details before the hire is approved. **Submitting this form does not reserve a hall.**
+
+```{=html}
+<form id="jpcc-room-hire-form" class="room-hire-form" action="https://formspree.io/f/meagqraw" method="POST" accept-charset="UTF-8">
+  <input type="hidden" name="_subject" value="JPCC room hire enquiry">
+  <input type="hidden" name="request_type" value="Room hire enquiry (not a confirmed booking)">
+
+  <fieldset>
+    <legend>Your contact details</legend>
+    <div class="room-hire-fields">
+      <div class="room-hire-field">
+        <label for="hire-contact-name">Contact name <span aria-hidden="true">*</span></label>
+        <input id="hire-contact-name" name="name" type="text" autocomplete="name" maxlength="120" required>
+      </div>
+      <div class="room-hire-field">
+        <label for="hire-email">Email address <span aria-hidden="true">*</span></label>
+        <input id="hire-email" name="email" type="email" autocomplete="email" maxlength="254" required>
+      </div>
+      <div class="room-hire-field">
+        <label for="hire-phone">Phone number (optional)</label>
+        <input id="hire-phone" name="phone" type="tel" autocomplete="tel" maxlength="40">
+      </div>
+      <div class="room-hire-field">
+        <label for="hire-organisation">Club or organisation (optional)</label>
+        <input id="hire-organisation" name="organisation" type="text" maxlength="120">
+      </div>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Hall and date requested</legend>
+    <div class="room-hire-fields">
+      <div class="room-hire-field">
+        <label for="hire-room">Hall <span aria-hidden="true">*</span></label>
+        <select id="hire-room" name="hall" required>
+          <option value="">Please select a hall</option>
+          <option value="Large Hall" data-room-id="room-1" data-capacity="80">Large Hall — up to 80 seated</option>
+          <option value="Small Hall" data-room-id="room-2" data-capacity="25">Small Hall — up to 25 seated</option>
+        </select>
+      </div>
+      <div class="room-hire-field">
+        <label for="hire-attendees">Expected number of people <span aria-hidden="true">*</span></label>
+        <input id="hire-attendees" name="attendees" type="number" min="1" max="80" step="1" inputmode="numeric" required>
+        <small id="hire-capacity-note">Choose a hall to see its seating limit.</small>
+      </div>
+      <div class="room-hire-field">
+        <label for="hire-date">Start date <span aria-hidden="true">*</span></label>
+        <input id="hire-date" name="start_date" type="date" required>
+      </div>
+      <div class="room-hire-field">
+        <label for="hire-end-date">Finish date <span aria-hidden="true">*</span></label>
+        <input id="hire-end-date" name="finish_date" type="date" required>
+        <small>Usually the same as the start date. Choose a later date for overnight or multi-day hire.</small>
+      </div>
+      <div class="room-hire-field">
+        <label for="hire-start">Start time <span aria-hidden="true">*</span></label>
+        <input id="hire-start" name="start_time" type="time" required>
+      </div>
+      <div class="room-hire-field">
+        <label for="hire-end">Finish time <span aria-hidden="true">*</span></label>
+        <input id="hire-end" name="end_time" type="time" required>
+        <small>All times are Adelaide local time.</small>
+      </div>
+      <div class="room-hire-field">
+        <label for="hire-frequency">Type of hire <span aria-hidden="true">*</span></label>
+        <select id="hire-frequency" name="hire_type" required>
+          <option value="One-off">One-off booking</option>
+          <option value="Recurring">Recurring booking request</option>
+        </select>
+      </div>
+      <div class="room-hire-field room-hire-field-wide" id="hire-repeat-container" hidden>
+        <label for="hire-repeat">Recurring schedule <span aria-hidden="true">*</span></label>
+        <textarea id="hire-repeat" name="recurrence_details" rows="3" maxlength="600" placeholder="For example: second and fourth Wednesday each month until 30 June 2027"></textarea>
+        <small>Please give the repeat pattern and an approximate finishing date.</small>
+      </div>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>What is your event?</legend>
+    <div class="room-hire-field">
+      <label for="hire-purpose">Event or activity <span aria-hidden="true">*</span></label>
+      <input id="hire-purpose" name="event_purpose" type="text" maxlength="160" placeholder="For example: club meeting, workshop or family gathering" required>
+    </div>
+    <div class="room-hire-field">
+      <label for="hire-notes">Additional information (optional)</label>
+      <textarea id="hire-notes" name="additional_information" rows="4" maxlength="2000" placeholder="Tell us about kitchen needs, setup, accessibility requirements, or any other questions."></textarea>
+    </div>
+  </fieldset>
+
+  <div class="room-hire-consent">
+    <label for="hire-acknowledge">
+      <input id="hire-acknowledge" name="acknowledge_enquiry_only" type="checkbox" value="yes" required>
+      I understand that this is an enquiry, not a confirmed booking, and that fees (including a cleaning fee if required) will be confirmed separately. <span aria-hidden="true">*</span>
+    </label>
+  </div>
+
+  <p class="room-hire-privacy">Your contact and enquiry details will be sent to the clubrooms organisers through Formspree for the purpose of responding to your request. Do not include payment card details or other sensitive information.</p>
+  <p><button class="room-hire-submit" type="submit">Send room hire enquiry</button></p>
+  <p class="room-hire-help">Fields marked * are required. After submission, Formspree will display the submission result.</p>
+</form>
+```
+
+```{=html}
+<script defer data-jpcc-events src="assets/js/jpcc-events.js"></script>
+```

@@ -1,77 +1,41 @@
 [
   {
-    "objectID": "clubs.html",
-    "href": "clubs.html",
-    "title": "Clubs",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Johnstone Park Combined Club Rooms",
     "section": "",
-    "text": "Lower Murray Radio Club — VK5ALM\nMurray Bridge Christadelphians",
+    "text": "The Johnstone Park Combined Clubrooms are located at 12 Thomas St, Murray Bridge SA 5253\nAccess is also available via Adelaide Rd.\n\n\n\n\n\n\n\n\n\nLoading upcoming events…\n\n\nFull calendar"
+  },
+  {
+    "objectID": "index.html#upcoming-events",
+    "href": "index.html#upcoming-events",
+    "title": "Johnstone Park Combined Club Rooms",
+    "section": "",
+    "text": "Loading upcoming events…\n\n\nFull calendar"
+  },
+  {
+    "objectID": "news.html",
+    "href": "news.html",
+    "title": "JPCC News",
+    "section": "",
+    "text": "Draft website now active!!",
     "crumbs": [
       "Home",
       "Shortcuts",
-      "Clubs"
+      "JPCC News"
     ]
   },
   {
-    "objectID": "clubs.html#current-clubs",
-    "href": "clubs.html#current-clubs",
-    "title": "Clubs",
+    "objectID": "news.html#club-news",
+    "href": "news.html#club-news",
+    "title": "JPCC News",
     "section": "",
-    "text": "Lower Murray Radio Club — VK5ALM\nMurray Bridge Christadelphians",
+    "text": "Draft website now active!!",
     "crumbs": [
       "Home",
       "Shortcuts",
-      "Clubs"
+      "JPCC News"
     ]
-  },
-  {
-    "objectID": "clubs.html#former-clubs",
-    "href": "clubs.html#former-clubs",
-    "title": "Clubs",
-    "section": "Former clubs",
-    "text": "Former clubs",
-    "crumbs": [
-      "Home",
-      "Shortcuts",
-      "Clubs"
-    ]
-  },
-  {
-    "objectID": "events.html",
-    "href": "events.html",
-    "title": "Calendar and events",
-    "section": "",
-    "text": "The Johnstone Park Combined Clubrooms are available for hire. Meeting times and public events for the various clubs are shown below. All times are Adelaide local time.",
-    "crumbs": [
-      "Home",
-      "Shortcuts",
-      "Calendar and events"
-    ]
-  },
-  {
-    "objectID": "events.html#regular-meetings",
-    "href": "events.html#regular-meetings",
-    "title": "Calendar and events",
-    "section": "",
-    "text": "The Johnstone Park Combined Clubrooms are available for hire. Meeting times and public events for the various clubs are shown below. All times are Adelaide local time.",
-    "crumbs": [
-      "Home",
-      "Shortcuts",
-      "Calendar and events"
-    ]
-  },
-  {
-    "objectID": "clubs/VK5ALM-radio-club.html",
-    "href": "clubs/VK5ALM-radio-club.html",
-    "title": "Radio Club meeting times, all are welcome!",
-    "section": "",
-    "text": "Our Radio club (which is affiliated with the Adelaide Hills Amateur Radio Society) meets at 7:00 p.m. on the second and fourth Wednesdays each month at the “Combined clubs” in Johnstone Park, Murray Bridge.\nThe entrance to Johnstone Park, which houses our club rooms, is at 12 Thomas Street, Murray Bridge.\nAnyone with an interest in radio communications is welcome.\nWe look forward to seeing you there!"
-  },
-  {
-    "objectID": "clubs/VK5ALM-radio-club.html#upcoming-club-events",
-    "href": "clubs/VK5ALM-radio-club.html#upcoming-club-events",
-    "title": "Radio Club meeting times, all are welcome!",
-    "section": "Upcoming club events",
-    "text": "Upcoming club events"
   },
   {
     "objectID": "mb-news.html",
@@ -123,41 +87,113 @@
     "text": "Sport\n\n2026-11-10 — Peter Murphy joins Murray Bridge Speedway Peter Murphy joins Murray Bridge Speedway, reported 9-10 November 2026 in Speedway Illustrated News.\n2026-10-03 — St Lawrence back on top in Murray Bridge Gold Cup St Lawrence scored his first black-type success in the A$150,000 Listed Carlton Draught Murray Bridge Gold Cup (1600m) at Murray Bridge.\n2026-11-06 — Murray Bridge greyhound racing results Friday, November 6, 2026 Murray Bridge race results, including the Daish Irrigation and Fodder (Straight) Stake.\n\n\nSources: Rural City of Murray Bridge, SA Police, PIRSA, Landscape SA, Murray Valley Standard, Murray Bridge News."
   },
   {
-    "objectID": "news.html",
-    "href": "news.html",
-    "title": "JPCC News",
+    "objectID": "clubs/VK5ALM-radio-club.html",
+    "href": "clubs/VK5ALM-radio-club.html",
+    "title": "Radio Club meeting times, all are welcome!",
     "section": "",
-    "text": "Draft website now active!!",
+    "text": "Our Radio club (which is affiliated with the Adelaide Hills Amateur Radio Society) meets at 7:00 p.m. on the second and fourth Wednesdays each month at the “Combined clubs” in Johnstone Park, Murray Bridge.\nThe entrance to Johnstone Park, which houses our club rooms, is at 12 Thomas Street, Murray Bridge.\nAnyone with an interest in radio communications is welcome.\nWe look forward to seeing you there!"
+  },
+  {
+    "objectID": "clubs/VK5ALM-radio-club.html#upcoming-club-events",
+    "href": "clubs/VK5ALM-radio-club.html#upcoming-club-events",
+    "title": "Radio Club meeting times, all are welcome!",
+    "section": "Upcoming club events",
+    "text": "Upcoming club events"
+  },
+  {
+    "objectID": "events.html",
+    "href": "events.html",
+    "title": "Calendar and events",
+    "section": "",
+    "text": "The Johnstone Park Combined Clubrooms are available for hire. Meeting times and public events for the various clubs are shown below. All times are Adelaide local time.",
     "crumbs": [
       "Home",
       "Shortcuts",
-      "JPCC News"
+      "Calendar and events"
     ]
   },
   {
-    "objectID": "news.html#club-news",
-    "href": "news.html#club-news",
-    "title": "JPCC News",
+    "objectID": "events.html#regular-meetings",
+    "href": "events.html#regular-meetings",
+    "title": "Calendar and events",
     "section": "",
-    "text": "Draft website now active!!",
+    "text": "The Johnstone Park Combined Clubrooms are available for hire. Meeting times and public events for the various clubs are shown below. All times are Adelaide local time.",
     "crumbs": [
       "Home",
       "Shortcuts",
-      "JPCC News"
+      "Calendar and events"
     ]
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Johnstone Park Combined Club Rooms",
+    "objectID": "clubs.html",
+    "href": "clubs.html",
+    "title": "Clubs",
     "section": "",
-    "text": "The Johnstone Park Combined Clubrooms are located at 12 Thomas St, Murray Bridge SA 5253\nAccess is also available via Adelaide Rd.\n\n\n\n\n\n\n\n\n\nLoading upcoming events…\n\n\nFull calendar"
+    "text": "Lower Murray Radio Club — VK5ALM\nMurray Bridge Christadelphians",
+    "crumbs": [
+      "Home",
+      "Shortcuts",
+      "Clubs"
+    ]
   },
   {
-    "objectID": "index.html#upcoming-events",
-    "href": "index.html#upcoming-events",
-    "title": "Johnstone Park Combined Club Rooms",
+    "objectID": "clubs.html#current-clubs",
+    "href": "clubs.html#current-clubs",
+    "title": "Clubs",
     "section": "",
-    "text": "Loading upcoming events…\n\n\nFull calendar"
+    "text": "Lower Murray Radio Club — VK5ALM\nMurray Bridge Christadelphians",
+    "crumbs": [
+      "Home",
+      "Shortcuts",
+      "Clubs"
+    ]
+  },
+  {
+    "objectID": "clubs.html#former-clubs",
+    "href": "clubs.html#former-clubs",
+    "title": "Clubs",
+    "section": "Former clubs",
+    "text": "Former clubs",
+    "crumbs": [
+      "Home",
+      "Shortcuts",
+      "Clubs"
+    ]
+  },
+  {
+    "objectID": "room-hire.html",
+    "href": "room-hire.html",
+    "title": "Room Hire",
+    "section": "",
+    "text": "The clubrooms at 12 Thomas Street, Murray Bridge SA 5253 are available for hire. You can request either of our two halls using the enquiry form below.",
+    "crumbs": [
+      "Home",
+      "Shortcuts",
+      "Room Hire"
+    ]
+  },
+  {
+    "objectID": "room-hire.html#choose-a-hall",
+    "href": "room-hire.html#choose-a-hall",
+    "title": "Room Hire",
+    "section": "Choose a hall",
+    "text": "Choose a hall\n\n  \n    Large Hall\n    Up to 80 people seated\n    Suitable for larger functions, workshops and community gatherings.\n  \n  \n    Small Hall\n    Up to 25 people seated\n    Suitable for smaller meetings, board games and club catch-ups.\n  \n\n\nIncluded facilities\nUse of the kitchen, wheelchair-accessible entrances, accessible toilets and accessible parking is included with hall hire.\n\n\nFees\nStandard hall hire rates apply. An additional cleaning fee may be charged if required. Please submit an enquiry for the applicable fees and confirmation of availability.",
+    "crumbs": [
+      "Home",
+      "Shortcuts",
+      "Room Hire"
+    ]
+  },
+  {
+    "objectID": "room-hire.html#request-a-room-hire",
+    "href": "room-hire.html#request-a-room-hire",
+    "title": "Room Hire",
+    "section": "Request a room hire",
+    "text": "Request a room hire\nComplete the form to send a booking enquiry to the clubrooms committee. We will need to confirm availability, fees and your booking details before the hire is approved. Submitting this form does not reserve a hall.\n\n  \n  \n\n  \n    Your contact details\n    \n      \n        Contact name *\n        \n      \n      \n        Email address *\n        \n      \n      \n        Phone number (optional)\n        \n      \n      \n        Club or organisation (optional)\n        \n      \n    \n  \n\n  \n    Hall and date requested\n    \n      \n        Hall *\n        \n          Please select a hall\n          Large Hall — up to 80 seated\n          Small Hall — up to 25 seated\n        \n      \n      \n        Expected number of people *\n        \n        Choose a hall to see its seating limit.\n      \n      \n        Start date *\n        \n      \n      \n        Finish date *\n        \n        Usually the same as the start date. Choose a later date for overnight or multi-day hire.\n      \n      \n        Start time *\n        \n      \n      \n        Finish time *\n        \n        All times are Adelaide local time.\n      \n      \n        Type of hire *\n        \n          One-off booking\n          Recurring booking request\n        \n      \n      \n        Recurring schedule *\n        \n        Please give the repeat pattern and an approximate finishing date.\n      \n    \n  \n\n  \n    What is your event?\n    \n      Event or activity *\n      \n    \n    \n      Additional information (optional)\n      \n    \n  \n\n  \n    \n      \n      I understand that this is an enquiry, not a confirmed booking, and that fees (including a cleaning fee if required) will be confirmed separately. *\n    \n  \n\n  Your contact and enquiry details will be sent to the clubrooms organisers through Formspree for the purpose of responding to your request. Do not include payment card details or other sensitive information.\n  Send room hire enquiry\n  Fields marked * are required. After submission, Formspree will display the submission result.",
+    "crumbs": [
+      "Home",
+      "Shortcuts",
+      "Room Hire"
+    ]
   }
 ]

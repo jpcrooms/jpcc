@@ -1,11 +1,11 @@
-# Johnstone Park Combined Clubrooms — shared Quarto calendar (stage 1.2)
+# Johnstone Park Combined Clubrooms — shared Quarto calendar (stage 1.3)
 
 Website: https://jpcrooms.github.io/jpcc/
 
 This version replaces the duplicated event JavaScript in `index.qmd` and
 `events.qmd` with **one shared script**, `assets/js/jpcc-events.js`.
 It keeps public events and room hire data separate so a two-room booking
-calendar can be added without rewriting the event engine.
+calendar can be added without rewriting the event engine. Stage 1.3 adds a room-hire enquiry form.
 
 ## Files and responsibilities
 
@@ -14,7 +14,8 @@ calendar can be added without rewriting the event engine.
 | `clubs/<your-club>.qmd` | This club's details and recurring event rules (under `jpcc:` in YAML front matter) |
 | `events.json` | One-off, public events that should appear on the website calendar |
 | `data/rooms.json` | Names and IDs of the building's two rooms |
-| `bookings.json` | Future room-hire records (initially empty) |
+| `bookings.json` | Manually confirmed room-hire records (currently empty; **not** automatically populated by form submissions) |
+| `room-hire.qmd` | Public hall descriptions and the Formspree enquiry form |
 | `scripts/build-club-data.py` | Build helper: reads the individual club `.qmd` pages |
 | `data/clubs.json` | Generated output; **do not edit manually** |
 | `assets/js/jpcc-events.js` | Shared recurrence, event listing, calendar and room-conflict engine |
@@ -113,10 +114,46 @@ its 10:30 a.m. start, and an `extendedProps.when` text that disagreed with the
 date. This release removes the invalid end and conflicting text without
 inventing a meeting duration. Please confirm its details.
 
+## Room hire enquiry form (stage 1.3)
+
+The new **Room Hire** navbar/sidebar link opens `room-hire.qmd`. The form submits
+with a native HTML POST to **https://formspree.io/f/meagqraw**. Formspree must be
+activated and configured under the organisation's Formspree account. **Do not
+put credentials in the website files.**
+
+It accepts contact name, email, optional telephone and organisation, hall,
+start/finish dates and times (including overnight), expected attendance, one-off or
+recurring hire request, event purpose and additional information. For recurring
+hire, the visitor is prompted to give the pattern and end date. JavaScript
+in the existing shared `assets/js/jpcc-events.js` adjusts the capacity limit
+according to the hall, checks that finish is later than start (including overnight hire),
+and asks for a recurring description. Native HTML fields still work without
+JavaScript. The Formspree service handles the actual submission and response.
+
+Hall mapping in `data/rooms.json`:
+
+- `room-1` = **Large Hall**, up to **80 seated**
+- `room-2` = **Small Hall**, up to **25 seated**
+
+Included facilities: kitchen, wheelchair-accessible entrances, accessible
+toilets and accessible parking. Standard hire rates apply and an additional
+cleaning fee may be charged if needed; **no prices are assumed**.
+
+**Important:** a Formspree submission is an enquiry only. It does not check
+live availability, write to `bookings.json`, approve a booking, charge a fee or
+lock either hall. Confirm availability manually before accepting hire. Do not
+copy submitted contact data into any public site JSON. The visitor's details
+are transmitted to Formspree, so make sure your organisation is comfortable
+with its privacy/data-handling practices and configure the Formspree inbox.
+
+After deployment, send **one genuine test enquiry** from the live website and
+confirm it appears in your Formspree dashboard / notification inbox. The
+working files and tests do **not** submit anything to Formspree.
+
 ## Two-room booking preparation (stage 2)
 
-The rooms are currently called `room-1` / `room-2`. Rename their display
-names in `data/rooms.json` once the real names are confirmed. A club event
+The rooms use IDs `room-1` (Large Hall) and `room-2` (Small Hall), as assigned
+in stage 1.3. These IDs stay stable for calendar data. A club event
 **only occupies a room** when that event has `roomId` set. Meetings held
 elsewhere, or with an unassigned room, do not block either room.
 
@@ -138,8 +175,8 @@ The shared JavaScript already provides `roomOccupancyForRange()` and
 `findRoomConflicts()` for the **next** room-availability page. Bookings with
 `status: "cancelled"` are ignored. Rooms may be occupied at the same time,
 but a single room cannot safely have overlapping confirmed reservations.
-**A booking form, approval workflow, live double-booking prevention and
-room calendar UI are not implemented yet.** A GitHub Pages website alone
+**The public enquiry form exists**, but an approval workflow, live double-booking
+prevention and the separate room-availability calendar are not implemented yet. A GitHub Pages website alone
 cannot safely accept or lock live reservation requests. Avoid publishing
 names, phone numbers, or other private booking details in public JSON.
 
@@ -153,8 +190,8 @@ preserved.** Only `project.pre-render` and additional `project.resources` entrie
 were introduced to support the shared calendar. The pre-render script is a
 Python 3 file, so Quarto invokes Python to run it; PyYAML must be installed.
 
-The original `_quarto.yml` and both original club `.qmd` files are now
-integrated. The build step invokes `python3` explicitly, rather than relying
+The original `_quarto.yml` and both original club `.qmd` files are integrated.
+The new Room Hire menu link is included in the navbar and Shortcuts sidebar. The build step invokes `python3` explicitly, rather than relying
 on executable permission of the `.py` file.
 
 Install Python/PyYAML, and use Quarto as usual:
@@ -184,4 +221,4 @@ node --test tests/jpcc-events.test.js
 
 Tests cover both clubs, monthly/weekly recurrence, exclusions and intervals,
 recurrence beyond 2035, one-off events, seasonal-neutral Adelaide time labels,
-room occupancy, and same-room collision detection.
+room occupancy, same-room collision detection and form validation wiring.

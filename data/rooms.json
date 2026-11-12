@@ -1,4 +1,4 @@
 [
-  { "id": "room-1", "name": "Room 1" },
-  { "id": "room-2", "name": "Room 2" }
+  { "id": "room-1", "name": "Large Hall", "capacity": 80 },
+  { "id": "room-2", "name": "Small Hall", "capacity": 25 }
 ]

@@ -102,3 +102,83 @@ test('room reservation requires explicit finish time; public start-only recurren
   assert.equal(events[0].end, undefined);
   assert.equal(lib.roomOccupancyForRange(asData, '2026-11-11', '2026-11-12').length, 0);
 });
+
+test('hall names, IDs and capacities match room hire options', () => {
+  assert.deepEqual(rooms.map(r => [r.id, r.name, r.capacity]), [
+    ['room-1', 'Large Hall', 80],
+    ['room-2', 'Small Hall', 25]
+  ]);
+});
+
+// Minimal DOM stand-ins to test the shared module's validation wiring without a browser.
+test('room hire form limits attendance by hall and validates finish time and recurrence', () => {
+  function field(value = '') {
+    const listeners = {};
+    return {
+      value, max: '', min: '', required: false, hidden: false, dataset: {},
+      validationMessage: '',
+      addEventListener: (name, fn) => { listeners[name] = fn; },
+      setCustomValidity(message) { this.validationMessage = message; },
+      dispatch(name) { listeners[name](); }
+    };
+  }
+  const room = field();
+  const large = {dataset: {capacity:'80'}};
+  const small = {dataset: {capacity:'25'}};
+  room.selectedOptions = [large];
+  const attendees = field('40');
+  const date = field('2026-11-13');
+  const finishDate = field();
+  const start = field('19:00');
+  const finish = field('21:00');
+  const frequency = field('One-off');
+  const repeatContainer = {hidden: true};
+  const repeat = field('');
+  const note = {textContent: ''};
+  const fields = new Map([
+    ['#hire-room',room],['#hire-attendees',attendees],['#hire-capacity-note',note],
+    ['#hire-date',date],['#hire-end-date',finishDate],['#hire-start',start],['#hire-end',finish],
+    ['#hire-frequency',frequency],['#hire-repeat-container',repeatContainer],
+    ['#hire-repeat',repeat]
+  ]);
+  const listeners = {};
+  const form = {
+    querySelector: selector => fields.get(selector),
+    addEventListener: (name, fn) => { listeners[name] = fn; },
+    reportValidity: () => !attendees.validationMessage && !finish.validationMessage
+  };
+  lib.initRoomHireForm(form);
+  assert.equal(attendees.max, '80');
+  assert.equal(date.min, lib.todayInAdelaide());
+  assert.equal(finishDate.value, '2026-11-13');
+  assert.equal(repeat.required, false);
+  room.selectedOptions = [small];
+  room.dispatch('change');
+  assert.equal(attendees.max, '25');
+  assert.match(attendees.validationMessage, /25/);
+  attendees.value = '20';
+  attendees.dispatch('input');
+  assert.equal(attendees.validationMessage, '');
+  finish.value = '18:00';
+  finish.dispatch('input');
+  assert.match(finish.validationMessage, /later than/);
+  let prevented = false;
+  listeners.submit({preventDefault() { prevented = true; }});
+  assert.equal(prevented, true);
+  finish.value = '22:00';
+  finish.dispatch('input');
+  assert.equal(finish.validationMessage, '');
+  finishDate.value = '2026-11-14';
+  finishDate.dispatch('change');
+  finish.value = '01:00';
+  finish.dispatch('input');
+  assert.equal(finish.validationMessage, ''); // Overnight hire is supported.
+  frequency.value = 'Recurring';
+  frequency.dispatch('change');
+  assert.equal(repeatContainer.hidden, false);
+  assert.equal(repeat.required, true);
+  frequency.value = 'One-off';
+  frequency.dispatch('change');
+  assert.equal(repeatContainer.hidden, true);
+  assert.equal(repeat.required, false);
+});

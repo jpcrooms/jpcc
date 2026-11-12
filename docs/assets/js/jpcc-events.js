@@ -297,7 +297,77 @@
     calendar.render();
   }
 
+  // Room hire enquiry stays a plain HTML POST to Formspree. JavaScript only
+  // improves local validation; it does not create, approve or publish bookings.
+  function initRoomHireForm(form) {
+    const room = form.querySelector("#hire-room");
+    const attendees = form.querySelector("#hire-attendees");
+    const note = form.querySelector("#hire-capacity-note");
+    const date = form.querySelector("#hire-date");
+    const finishDate = form.querySelector("#hire-end-date");
+    const start = form.querySelector("#hire-start");
+    const finish = form.querySelector("#hire-end");
+    const frequency = form.querySelector("#hire-frequency");
+    const repeatContainer = form.querySelector("#hire-repeat-container");
+    const repeat = form.querySelector("#hire-repeat");
+    if (!room || !attendees || !date || !finishDate || !start || !finish || !frequency || !repeat) return;
+
+    date.min = todayInAdelaide();
+    finishDate.min = date.min;
+    function updateDates() {
+      finishDate.min = date.value || date.min;
+      if (!finishDate.value || (date.value && finishDate.value < date.value)) finishDate.value = date.value;
+      validateTimes();
+    }
+    function validateCapacity() {
+      const selected = room.selectedOptions[0];
+      const capacity = Number(selected && selected.dataset.capacity);
+      if (capacity > 0) {
+        attendees.max = String(capacity);
+        note.textContent = "Maximum " + capacity + " seated guests for this hall.";
+        attendees.setCustomValidity(attendees.value && Number(attendees.value) > capacity
+          ? "This hall seats up to " + capacity + ". Please choose a larger hall or reduce the number of guests."
+          : "");
+      } else {
+        attendees.max = "80";
+        note.textContent = "Choose a hall to see its seating limit.";
+        attendees.setCustomValidity("");
+      }
+    }
+    function validateTimes() {
+      const invalidDate = !!(date.value && finishDate.value && finishDate.value < date.value);
+      finishDate.setCustomValidity(invalidDate ? "Finish date cannot be earlier than the start date." : "");
+      const invalidTime = !!(date.value && finishDate.value && start.value && finish.value &&
+        (invalidDate || (date.value === finishDate.value && finish.value <= start.value)));
+      finish.setCustomValidity(invalidTime ? "Finish date and time must be later than the start date and time." : "");
+    }
+    function updateRecurrence() {
+      const recurring = frequency.value === "Recurring";
+      repeatContainer.hidden = !recurring;
+      repeat.required = recurring;
+      if (!recurring) repeat.value = "";
+    }
+    room.addEventListener("change", validateCapacity);
+    attendees.addEventListener("input", validateCapacity);
+    date.addEventListener("change", updateDates);
+    finishDate.addEventListener("change", validateTimes);
+    start.addEventListener("input", validateTimes);
+    finish.addEventListener("input", validateTimes);
+    frequency.addEventListener("change", updateRecurrence);
+    form.addEventListener("submit", function (event) {
+      validateCapacity();
+      validateTimes();
+      if (!form.reportValidity()) event.preventDefault();
+    });
+    validateCapacity();
+    updateDates();
+    validateTimes();
+    updateRecurrence();
+  }
+
   function init() {
+    const hireForm = document.getElementById("jpcc-room-hire-form");
+    if (hireForm) initRoomHireForm(hireForm);
     const calendar = document.getElementById("calendar");
     if (calendar) initCalendar(calendar);
     const upcomingElements = [...document.querySelectorAll("#upcoming-events, [data-club-events]")];
@@ -315,7 +385,8 @@
 
   const api = {
     addDays, nthWeekday, expandRecurring, normalizeOneOff, publicEventsForRange,
-    roomOccupancyForRange, findRoomConflicts, formatTime, todayInAdelaide, loadData
+    roomOccupancyForRange, findRoomConflicts, formatTime, todayInAdelaide, loadData,
+    initRoomHireForm
   };
   root.JPCCEvents = api;
   if (typeof module === "object" && module.exports) module.exports = api;

@@ -1,5 +1,0 @@
----
-title: "Murray Bridge Christadelphians"
-subtitle: ""
-toc: false
----

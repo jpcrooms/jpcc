@@ -1,0 +1,31 @@
+[
+  {
+    "id": "murray-bridge-christadelphians",
+    "name": "Murray Bridge Christadelphians",
+    "page": "clubs/Murray-Bridge-Christadelphians.qmd",
+    "events": []
+  },
+  {
+    "id": "vk5alm",
+    "name": "Lower Murray Radio Club",
+    "page": "clubs/VK5ALM-radio-club.qmd",
+    "events": [
+      {
+        "id": "club-meeting",
+        "title": "Lower Murray Radio Club meeting",
+        "frequency": "monthly",
+        "weekday": "wed",
+        "weeks": [
+          2,
+          4
+        ],
+        "startDate": "2026-01-01",
+        "startTime": "19:00",
+        "location": "Johnstone Park Combined Clubrooms",
+        "skipDates": [],
+        "interval": 1,
+        "clubId": "vk5alm"
+      }
+    ]
+  }
+]

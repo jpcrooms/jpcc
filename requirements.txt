@@ -1,0 +1,2 @@
+quarto-cli
+PyYAML>=6.0

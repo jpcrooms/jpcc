@@ -1,0 +1,37 @@
+---
+title: "Radio Club meeting times, all are welcome!"
+subtitle: "Lower Murray Radio Club — VK5ALM"
+toc: false
+jpcc:
+  id: vk5alm
+  name: Lower Murray Radio Club
+  events:
+    - id: club-meeting
+      title: Lower Murray Radio Club meeting
+      frequency: monthly
+      weekday: wed
+      weeks: [2, 4]
+      startDate: '2026-01-01'
+      startTime: '19:00'
+      # endTime is deliberately unspecified: the supplied page only says 7 pm.
+      # Add e.g. endTime: '21:00' once the club confirms its finishing time.
+      # Set roomId to room-1 or room-2 ONLY when the room is confirmed.
+      location: Johnstone Park Combined Clubrooms
+      # skipDates: ['2026-12-23']
+---
+
+Our Radio club (which is affiliated with the Adelaide Hills Amateur Radio Society) meets at **7:00 p.m. on the second and fourth Wednesdays** each month at the "Combined clubs" in Johnstone Park, Murray Bridge.
+
+The entrance to Johnstone Park, which houses our club rooms, is at **12 Thomas Street, Murray Bridge**. 
+
+Anyone with an interest in radio communications is welcome.
+
+We look forward to seeing you there!
+
+## Upcoming club events
+
+<div data-club-events="vk5alm"></div>
+
+```{=html}
+<script defer data-jpcc-events src="../assets/js/jpcc-events.js"></script>
+```

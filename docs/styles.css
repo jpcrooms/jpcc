@@ -1,0 +1,143 @@
+
+.navbar {
+  border-bottom: 4px solid #769505;
+}
+
+.navbar-title {
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+#title-block-header h1.title {
+  color: #222;
+}
+
+.callout-repeater {
+  border-left: 4px solid #769505;
+}
+
+.club-map iframe {
+  width: 100%;
+  max-width: 640px;
+  height: 420px;
+  border: 0;
+}
+
+img.cover-map {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #ddd;
+}
+
+#calendar {
+  margin: 1.5rem 0 2rem;
+  background: #fff;
+  padding: 0.75rem;
+  border: 1px solid #e2e2e2;
+}
+
+#calendar .fc-toolbar-title {
+  font-size: 1.25rem;
+}
+
+#calendar .fc-event {
+  background-color: #769505;
+  border-color: #769505;
+  cursor: pointer;
+}
+
+#calendar .fc-button-primary {
+  background-color: #769505;
+  border-color: #769505;
+}
+
+#calendar .fc-button-primary:hover,
+#calendar .fc-button-primary:not(:disabled).fc-button-active {
+  background-color: #769505;
+  border-color: #769505;
+}
+
+#calendar .fc-event,
+#calendar .fc-event-main,
+#calendar .fc-event-title,
+#calendar .fc-event-time,
+#calendar .fc-list-event-title,
+#calendar .fc-list-event-time,
+#calendar a.fc-event,
+#calendar a.fc-event:visited {
+  color: #fff !important;
+}
+
+.home-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: 2rem;
+  align-items: start;
+}
+
+.home-events {
+  border-left: 1px solid #e2e2e2;
+  padding-left: 1.25rem;
+}
+
+.home-events h2 {
+  font-size: 1.15rem;
+  margin-top: 0;
+}
+
+.upcoming-item {
+  display: grid;
+  grid-template-columns: 3.2rem 1fr;
+  gap: 0.7rem;
+  margin: 0 0 1.15rem;
+}
+
+.upcoming-mon {
+  display: block;
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  color: #666;
+  text-transform: uppercase;
+}
+
+.upcoming-day {
+  display: block;
+  font-size: 1.6rem;
+  line-height: 1;
+  font-weight: 700;
+  color: #769505;
+}
+
+.upcoming-when {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.upcoming-weekday {
+  font-weight: 700;
+}
+
+.upcoming-title {
+  font-weight: 600;
+}
+
+.upcoming-place {
+  font-size: 0.85rem;
+  color: #555;
+}
+
+@media (max-width: 768px) {
+  .home-layout {
+    grid-template-columns: 1fr;
+  }
+  .home-events {
+    border-left: 0;
+    border-top: 1px solid #e2e2e2;
+    padding-left: 0;
+    padding-top: 1rem;
+  }
+}
+
+.upcoming-club { font-size: 0.82rem; color: #444; }
+.jpcc-calendar-error { color: #a02222; }

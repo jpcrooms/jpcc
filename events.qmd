@@ -1,0 +1,19 @@
+---
+title: "Calendar and events"
+toc: false
+include-in-header:
+  text: |
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.17/index.global.min.js"></script>
+---
+
+## Regular meetings
+
+The Johnstone Park Combined Clubrooms are available for hire. 
+Meeting times and public events for the various clubs are shown below. All times are Adelaide local time.
+
+::: {#calendar}
+:::
+
+```{=html}
+<script defer data-jpcc-events src="assets/js/jpcc-events.js"></script>
+```

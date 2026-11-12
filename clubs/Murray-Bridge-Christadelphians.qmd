@@ -1,0 +1,19 @@
+---
+title: "Murray Bridge Christadelphians"
+subtitle: ""
+toc: false
+jpcc:
+  id: murray-bridge-christadelphians
+  name: Murray Bridge Christadelphians
+  # No recurring meeting times are specified in the supplied original page.
+  # Add recurring schedules here when the days/times have been confirmed.
+  events: []
+---
+
+## Upcoming club events
+
+<div data-club-events="murray-bridge-christadelphians"></div>
+
+```{=html}
+<script defer data-jpcc-events src="../assets/js/jpcc-events.js"></script>
+```

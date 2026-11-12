@@ -1,12 +1,12 @@
 ---
-title: "Room Hire Enquiry Received"
+title: "Room Hire Enquiry Submitted"
 subtitle: "Johnstone Park Combined Club Rooms — Murray Bridge"
 toc: false
 ---
 
-Thank you. **Your room hire enquiry has been received.**
+Thank you. **Your room hire enquiry has been submitted to Formspree.**
 
-The clubrooms organisers will review your request and contact you about hall availability, fees and any additional cleaning charges.
+Formspree has accepted the submission for processing. The clubrooms organisers will review enquiries delivered to them and respond about availability, fees and any additional cleaning charges. If you do not receive a response, please follow up with the organisers, as automated spam filtering can occasionally hold genuine enquiries.
 
 **This is not yet a confirmed booking.** Please wait for confirmation before making arrangements that depend on the hall being available.
 

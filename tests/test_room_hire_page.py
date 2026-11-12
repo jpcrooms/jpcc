@@ -35,6 +35,23 @@ class RoomHirePageTests(unittest.TestCase):
         options = {o.get('value'): int(o.get('data-capacity')) for o in hall.find_all('option') if o.has_attr('data-capacity')}
         self.assertEqual(options, {'Large Hall': 80, 'Small Hall': 25})
 
+    def test_free_plan_formspree_honeypot(self):
+        form = self.html.find('form', id='jpcc-room-hire-form')
+        traps = form.find_all('input', attrs={'name': '_gotcha'})
+        self.assertEqual(len(traps), 1)
+        trap = traps[0]
+        self.assertEqual(trap['type'], 'text')  # Not type=hidden: simple bots can fill it.
+        self.assertEqual(trap['autocomplete'], 'off')
+        self.assertEqual(trap['tabindex'], '-1')
+        self.assertFalse(trap.has_attr('disabled'))  # Must be included in FormData.
+        self.assertFalse(trap.has_attr('required'))
+        self.assertEqual(trap.parent.get('aria-hidden'), 'true')
+        stylesheet = (ROOT / 'styles.css').read_text()
+        self.assertIn('.room-hire-honeypot', stylesheet)
+        self.assertIn('display: none !important', stylesheet)
+        self.assertIsNone(trap.find_previous_sibling('label'))
+        self.assertNotIn('Website', trap.parent.get_text())
+
     def test_shared_script_and_enquiry_only(self):
         scripts = self.html.find_all('script', src=True)
         self.assertEqual(len(scripts), 1)

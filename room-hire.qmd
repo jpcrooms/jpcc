@@ -48,6 +48,11 @@ Complete the form to send a **booking enquiry** to the clubrooms committee. We w
   <input type="hidden" name="_subject" value="JPCC room hire enquiry">
   <input type="hidden" name="request_type" value="Room hire enquiry (not a confirmed booking)">
 
+  <!-- Formspree free-plan honeypot. Hidden from people, but present in the submitted form. -->
+  <div class="room-hire-honeypot" aria-hidden="true">
+    <input type="text" name="_gotcha" value="" tabindex="-1" autocomplete="off" spellcheck="false">
+  </div>
+
   <fieldset>
     <legend>Your contact details</legend>
     <div class="room-hire-fields">

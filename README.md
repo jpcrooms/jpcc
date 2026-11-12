@@ -1,11 +1,11 @@
-# Johnstone Park Combined Clubrooms — shared Quarto calendar (stage 1.4)
+# Johnstone Park Combined Clubrooms — shared Quarto calendar (stage 1.6)
 
 Website: https://jpcrooms.github.io/jpcc/
 
 This version replaces the duplicated event JavaScript in `index.qmd` and
 `events.qmd` with **one shared script**, `assets/js/jpcc-events.js`.
 It keeps public events and room hire data separate so a two-room booking
-calendar can be added without rewriting the event engine. Stage 1.3 added a room-hire enquiry form; Stage 1.4 improves submission handling and adds hall photo galleries.
+calendar can be added without rewriting the event engine. Stage 1.3 added a room-hire enquiry form; Stage 1.4 improves submission handling and adds hall photo galleries. Stage 1.6 makes the `_gotcha` honeypot less vulnerable to browser autofill and prevents false success messages if a browser fills it.
 
 ## Files and responsibilities
 
@@ -297,3 +297,26 @@ python3 -m unittest discover -s tests -p 'test_*.py' -v
 The Quarto CLI is not installed in the test environment, so a real rendered
 browser deployment and a Formspree submission still require testing on your
 published website.
+
+## Stage 1.5 — Formspree free-plan honeypot
+
+The Room Hire form includes an **optional, empty text field** named `_gotcha`,
+inside a visually hidden, non-focusable container. Do not change it to a
+`type="hidden"` input or disable it: ordinary web-scraping bots sometimes fill
+text fields, and Formspree silently discards submissions with `_gotcha` populated.
+A normal visitor will not see or complete it.
+
+This feature is supported by Formspree on the **free plan**. The custom AJAX
+submission handling and thank-you page are unchanged; you may leave
+Formspree's CAPTCHA disabled, though a honeypot offers only basic protection.
+Neither a paid redirect setting nor extra JavaScript is needed.
+
+Reference: https://help.formspree.io/articles/building-your-form/honeypot-spam-filtering
+
+## Stage 1.6 — troubleshooting legitimate enquiries classified as spam
+
+Formspree's `_gotcha` honeypot is a free-plan feature. A non-empty `_gotcha` field is *silently ignored* by Formspree even if the AJAX HTTP response looks successful. Earlier versions had an off-screen field labelled “Website”; some browser autofill systems may have tried to populate it. In this version the field uses `display:none` and has no autofill-attracting label. The JavaScript also prevents submission if the hidden field has a non-empty value and shows an error asking the visitor to retry without autofill.
+
+Formspree **also has independent, automatic spam classification** which may flag legitimate test submissions. If a message shows up in Formspree's *Spam* tab, check its details and look for a *Not spam/Move to Inbox* action if one is offered. If this is unavailable, contact Formspree support with the timestamp and sample message. This cannot be fixed in the Quarto website, and a 200/OK Formspree response does **not** guarantee delivery to an inbox. For testing, use a realistic, distinct message, and avoid repeatedly sending the same short text. Check the actual Formspree inbox rather than relying only on the thank-you page.
+
+Leave the built-in CAPTCHA disabled for this JavaScript form unless you explicitly implement Formspree's embedded reCAPTCHA integration. **Never send real personal data in a published debug screenshot.**

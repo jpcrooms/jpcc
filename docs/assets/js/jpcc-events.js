@@ -376,6 +376,7 @@
     const repeat = form.querySelector("#hire-repeat");
     const submitButton = form.querySelector('button[type="submit"]');
     const status = form.querySelector("#hire-form-status");
+    const honeypot = form.querySelector('input[name="_gotcha"]');
     let submitting = false;
     if (!room || !attendees || !date || !finishDate || !start || !finish || !frequency || !repeat) return;
 
@@ -437,8 +438,19 @@
         event.preventDefault();
         return;
       }
+      // Never allow a legitimate visitor's browser autofill to submit a filled
+      // honeypot. Formspree silently discards these even when it responds OK.
+      if (honeypot && String(honeypot.value || "").trim()) {
+        event.preventDefault();
+        if (status) {
+          status.hidden = false;
+          status.dataset.state = "error";
+          status.textContent = "A hidden anti-spam field was filled, possibly by browser autofill. Your enquiry was not sent. Please refresh the page and enter the details manually.";
+        }
+        return;
+      }
       // If the script's AJAX prerequisites are unavailable, let the browser's
-      // standard form POST proceed; Formspree dashboard redirect applies then.
+      // standard form POST proceed; the Formspree default page will be shown.
       if (!submitButton || !status || typeof root.fetch !== "function" ||
           typeof root.FormData !== "function") return;
       event.preventDefault();

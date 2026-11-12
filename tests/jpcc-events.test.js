@@ -224,3 +224,40 @@ test('Formspree validation errors are surfaced, not mistaken for success', async
     globalThis.FormData = formDataOriginal;
   }
 });
+
+test('browser-autofilled honeypot blocks a genuine enquiry before Formspree can silently discard it', async () => {
+  const field = (value = '') => ({value, dataset: {}, addEventListener() {}, setCustomValidity() {}, selectedOptions: []});
+  const room = field('Large Hall');
+  room.selectedOptions = [{dataset: {capacity: '80'}}];
+  const attendees = field('10');
+  const date = field('2026-11-20');
+  const finishDate = field('2026-11-20');
+  const start = field('10:00');
+  const finish = field('12:00');
+  const freq = field('One-off');
+  const honeypot = field('autofilled.example');
+  const status = {hidden: true, textContent: '', dataset: {}};
+  const button = {disabled: false, textContent: 'Send room hire enquiry'};
+  const fields = new Map([
+    ['#hire-room', room], ['#hire-attendees', attendees],
+    ['#hire-capacity-note', {textContent: ''}], ['#hire-date', date],
+    ['#hire-end-date', finishDate], ['#hire-start', start], ['#hire-end', finish],
+    ['#hire-frequency', freq], ['#hire-repeat-container', {hidden: true}],
+    ['#hire-repeat', field('')], ['input[name="_gotcha"]', honeypot],
+    ['button[type="submit"]', button], ['#hire-form-status', status]
+  ]);
+  let submit;
+  const form = {
+    querySelector: selector => fields.get(selector),
+    addEventListener: (name, fn) => { if (name === 'submit') submit = fn; },
+    reportValidity: () => true
+  };
+  lib.initRoomHireForm(form);
+  let prevented = false;
+  await submit({ preventDefault() { prevented = true; } });
+  assert.equal(prevented, true);
+  assert.match(status.textContent, /browser autofill/);
+  assert.equal(status.dataset.state, 'error');
+  assert.equal(status.hidden, false);
+  assert.equal(button.disabled, false);
+});

@@ -2,11 +2,25 @@
   {
     "id": "large",
     "name": "Large Hall",
-    "photos": []
+    "photos": [
+      {
+        "src": "assets/hall-photos/large/large-hall1-heic.jpg",
+        "alt": "Large Hall — large hall1"
+      },
+      {
+        "src": "assets/hall-photos/large/large-hall2-heic.jpg",
+        "alt": "Large Hall — large hall2"
+      }
+    ]
   },
   {
     "id": "small",
     "name": "Small Hall",
-    "photos": []
+    "photos": [
+      {
+        "src": "assets/hall-photos/small/small-room-heic.jpg",
+        "alt": "Small Hall — small room"
+      }
+    ]
   }
 ]

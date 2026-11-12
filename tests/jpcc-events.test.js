@@ -182,3 +182,45 @@ test('room hire form limits attendance by hall and validates finish time and rec
   assert.equal(repeatContainer.hidden, true);
   assert.equal(repeat.required, false);
 });
+
+// No live Formspree requests are made in tests: fetch and FormData are stubbed.
+test('Formspree AJAX success sends JSON accept header and leaves original endpoint intact', async () => {
+  const fetchOriginal = globalThis.fetch;
+  const formDataOriginal = globalThis.FormData;
+  try {
+    let call;
+    globalThis.FormData = class { constructor(form) { this.form = form; } };
+    globalThis.fetch = async (url, options) => {
+      call = {url, options};
+      return {ok: true, status: 200, json: async () => ({ok: true})};
+    };
+    const form = {action: 'https://formspree.io/f/meagqraw'};
+    const outcome = await lib.postRoomHireForm(form);
+    assert.equal(outcome.ok, true);
+    assert.equal(call.url, 'https://formspree.io/f/meagqraw');
+    assert.equal(call.options.method, 'POST');
+    assert.equal(call.options.headers.Accept, 'application/json');
+    assert.equal(call.options.body.form, form);
+  } finally {
+    globalThis.fetch = fetchOriginal;
+    globalThis.FormData = formDataOriginal;
+  }
+});
+
+test('Formspree validation errors are surfaced, not mistaken for success', async () => {
+  const fetchOriginal = globalThis.fetch;
+  const formDataOriginal = globalThis.FormData;
+  try {
+    globalThis.FormData = class {};
+    globalThis.fetch = async () => ({ok: false, status: 422,
+      json: async () => ({errors: [{message: 'Email address is invalid.'}]})});
+    await assert.rejects(lib.postRoomHireForm({action: 'https://formspree.io/f/meagqraw'}), /Email address is invalid/);
+    globalThis.fetch = async () => ({ok: false, status: 429, json: async () => ({})});
+    await assert.rejects(lib.postRoomHireForm({action: 'https://formspree.io/f/meagqraw'}), /Too many submissions/);
+    globalThis.fetch = async () => ({ok: true, status: 200, json: async () => { throw Error('Unexpected HTML'); }});
+    await assert.rejects(lib.postRoomHireForm({action: 'https://formspree.io/f/meagqraw'}), /unexpected response/);
+  } finally {
+    globalThis.fetch = fetchOriginal;
+    globalThis.FormData = formDataOriginal;
+  }
+});

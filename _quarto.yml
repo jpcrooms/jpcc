@@ -2,13 +2,18 @@ project:
   type: website
   output-dir: docs
   # Generate the public calendar dataset from each club's .qmd front matter.
-  pre-render: "python3 scripts/build-club-data.py"
+  pre-render:
+    - "python3 scripts/build-club-data.py"
+    - "python3 scripts/build-hall-photos.py"
   resources:
     - events.json
     - bookings.json
     - data/clubs.json
     - data/rooms.json
     - assets/js/jpcc-events.js
+    - assets/hall-photos/manifest.json
+    - assets/hall-photos/large/*
+    - assets/hall-photos/small/*
 
 website:
   title: "Johnstone Park Combined Club Rooms"

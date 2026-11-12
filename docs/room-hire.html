@@ -223,11 +223,19 @@ ul.task-list li input[type="checkbox"] {
     <h3 class="anchored">Large Hall</h3>
     <p class="room-hire-capacity">Up to 80 people seated</p>
     <p>Suitable for larger functions, workshops and community gatherings.</p>
+    <div class="room-hire-photos" data-hall-photos="large" aria-label="Large Hall photographs">
+      <p class="room-hire-photo-empty">Photographs of the Large Hall will be added here.</p>
+    </div>
+    <a class="room-hire-select" href="#jpcc-room-hire-form" data-select-hall="Large Hall">Select Large Hall for enquiry</a>
   </section>
   <section class="room-hire-option">
     <h3 class="anchored">Small Hall</h3>
     <p class="room-hire-capacity">Up to 25 people seated</p>
     <p>Suitable for smaller meetings, board games and club catch-ups.</p>
+    <div class="room-hire-photos" data-hall-photos="small" aria-label="Small Hall photographs">
+      <p class="room-hire-photo-empty">Photographs of the Small Hall will be added here.</p>
+    </div>
+    <a class="room-hire-select" href="#jpcc-room-hire-form" data-select-hall="Small Hall">Select Small Hall for enquiry</a>
   </section>
 </div>
 <section id="included-facilities" class="level3">
@@ -338,7 +346,8 @@ ul.task-list li input[type="checkbox"] {
 
   <p class="room-hire-privacy">Your contact and enquiry details will be sent to the clubrooms organisers through Formspree for the purpose of responding to your request. Do not include payment card details or other sensitive information.</p>
   <p><button class="room-hire-submit" type="submit">Send room hire enquiry</button></p>
-  <p class="room-hire-help">Fields marked * are required. After submission, Formspree will display the submission result.</p>
+  <p id="hire-form-status" class="room-hire-status" role="status" aria-live="polite" hidden=""></p>
+  <p class="room-hire-help">Fields marked * are required. We will show a confirmation only after Formspree accepts the enquiry. A submission is not a confirmed booking.</p>
 </form>
 <script defer="" data-jpcc-events="" src="assets/js/jpcc-events.js"></script>
 

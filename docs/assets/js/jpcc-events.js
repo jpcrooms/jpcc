@@ -297,8 +297,72 @@
     calendar.render();
   }
 
-  // Room hire enquiry stays a plain HTML POST to Formspree. JavaScript only
-  // improves local validation; it does not create, approve or publish bookings.
+  // AJAX room-hire enquiries show errors on this page and redirect only after a
+  // successful Formspree response. Without JavaScript the native POST still works.
+  // Nothing here approves a booking or writes to the public calendar.
+  function formspreeErrorMessage(response, payload) {
+    if (response.status === 429) return "Too many submissions were sent recently. Please wait before trying again.";
+    const errors = payload && Array.isArray(payload.errors) ? payload.errors : [];
+    const messages = errors.map(err => err && err.message).filter(msg => typeof msg === "string" && msg.trim());
+    if (messages.length) return messages.join(" ");
+    if (response.status === 403) return "Formspree has rejected this submission. Please check its spam protection or contact the clubrooms organisers.";
+    if (response.status >= 500) return "The enquiry service is temporarily unavailable. Please try again later.";
+    return "Formspree did not accept the enquiry (HTTP " + response.status + "). Please check the form and try again.";
+  }
+
+  async function postRoomHireForm(form) {
+    // Request JSON so Formspree returns a status/error response instead of
+    // navigating to an external HTML error/thank-you page.
+    const response = await root.fetch(form.action, {
+      method: "POST",
+      body: new root.FormData(form),
+      headers: { Accept: "application/json" }
+    });
+    let payload = null;
+    try { payload = await response.json(); } catch (_) { /* unexpected non-JSON response */ }
+    if (!response.ok) throw new Error(formspreeErrorMessage(response, payload));
+    if (!payload || payload.ok === false) {
+      // An HTML confirmation, challenge or proxy page isn't positive proof of
+      // Formspree acceptance; keep the enquiry on screen rather than mislead.
+      throw new Error("The form service returned an unexpected response. Your enquiry may have been received; please check before sending it again.");
+    }
+    return payload;
+  }
+
+  function initRoomHirePhotos() {
+    const slots = [...document.querySelectorAll("[data-hall-photos]")];
+    if (!slots.length) return;
+    fetchJson("assets/hall-photos/manifest.json").then(galleries => {
+      if (!Array.isArray(galleries)) return;
+      for (const slot of slots) {
+        const hallId = slot.getAttribute("data-hall-photos");
+        const hall = galleries.find(g => g && g.id === hallId);
+        if (!hall || !Array.isArray(hall.photos) || !hall.photos.length) continue;
+        const thumbnails = [];
+        for (const photo of hall.photos) {
+          if (!photo || typeof photo.src !== "string" ||
+              !/^assets\/hall-photos\/(large|small)\/[a-z0-9._-]+\.(jpg|jpeg|png|webp)$/i.test(photo.src) ||
+              !photo.src.startsWith("assets/hall-photos/" + hallId + "/")) continue;
+          const url = new URL(photo.src, siteRootUrl()).href;
+          const link = make("a", "room-hire-photo-link");
+          link.href = url;
+          link.target = "_blank";
+          link.rel = "noopener noreferrer";
+          link.setAttribute("aria-label", "View " + (photo.alt || hall.name + " photograph") + " full size");
+          const picture = make("img", "room-hire-photo-thumb");
+          picture.src = url;
+          picture.alt = photo.alt || hall.name + " photograph";
+          picture.loading = "lazy";
+          link.appendChild(picture);
+          thumbnails.push(link);
+        }
+        if (thumbnails.length) slot.replaceChildren(...thumbnails);
+      }
+    }).catch(error => {
+      // Missing or unpublished photo manifest must never block form submission.
+      console.warn("Hall photos unavailable:", error);
+    });
+  }
   function initRoomHireForm(form) {
     const room = form.querySelector("#hire-room");
     const attendees = form.querySelector("#hire-attendees");
@@ -310,6 +374,9 @@
     const frequency = form.querySelector("#hire-frequency");
     const repeatContainer = form.querySelector("#hire-repeat-container");
     const repeat = form.querySelector("#hire-repeat");
+    const submitButton = form.querySelector('button[type="submit"]');
+    const status = form.querySelector("#hire-form-status");
+    let submitting = false;
     if (!room || !attendees || !date || !finishDate || !start || !finish || !frequency || !repeat) return;
 
     date.min = todayInAdelaide();
@@ -354,10 +421,49 @@
     start.addEventListener("input", validateTimes);
     finish.addEventListener("input", validateTimes);
     frequency.addEventListener("change", updateRecurrence);
-    form.addEventListener("submit", function (event) {
+    for (const link of (typeof document === "undefined" ? [] : document.querySelectorAll("[data-select-hall]"))) {
+      link.addEventListener("click", function () {
+        const hallName = link.getAttribute("data-select-hall");
+        if ([...room.options].some(option => option.value === hallName)) {
+          room.value = hallName;
+          room.dispatchEvent(new Event("change", { bubbles: true }));
+        }
+      });
+    }
+    form.addEventListener("submit", async function (event) {
       validateCapacity();
       validateTimes();
-      if (!form.reportValidity()) event.preventDefault();
+      if (!form.reportValidity()) {
+        event.preventDefault();
+        return;
+      }
+      // If the script's AJAX prerequisites are unavailable, let the browser's
+      // standard form POST proceed; Formspree dashboard redirect applies then.
+      if (!submitButton || !status || typeof root.fetch !== "function" ||
+          typeof root.FormData !== "function") return;
+      event.preventDefault();
+      if (submitting) return;
+      submitting = true;
+      submitButton.disabled = true;
+      submitButton.textContent = "Sending enquiry…";
+      status.hidden = false;
+      status.dataset.state = "progress";
+      status.textContent = "Sending your enquiry…";
+      try {
+        await postRoomHireForm(form);
+        status.dataset.state = "success";
+        status.textContent = "Enquiry received. Opening confirmation page…";
+        if (root.location && typeof root.location.assign === "function") {
+          root.location.assign(new URL("room-hire-thank-you.html", siteRootUrl()).href);
+        }
+      } catch (error) {
+        status.dataset.state = "error";
+        status.textContent = error && error.message
+          ? error.message : "Unable to confirm your enquiry. Please check before resubmitting.";
+        submitting = false;
+        submitButton.disabled = false;
+        submitButton.textContent = "Send room hire enquiry";
+      }
     });
     validateCapacity();
     updateDates();
@@ -368,6 +474,7 @@
   function init() {
     const hireForm = document.getElementById("jpcc-room-hire-form");
     if (hireForm) initRoomHireForm(hireForm);
+    initRoomHirePhotos();
     const calendar = document.getElementById("calendar");
     if (calendar) initCalendar(calendar);
     const upcomingElements = [...document.querySelectorAll("#upcoming-events, [data-club-events]")];
@@ -386,7 +493,7 @@
   const api = {
     addDays, nthWeekday, expandRecurring, normalizeOneOff, publicEventsForRange,
     roomOccupancyForRange, findRoomConflicts, formatTime, todayInAdelaide, loadData,
-    initRoomHireForm
+    initRoomHireForm, initRoomHirePhotos, postRoomHireForm, formspreeErrorMessage
   };
   root.JPCCEvents = api;
   if (typeof module === "object" && module.exports) module.exports = api;

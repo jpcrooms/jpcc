@@ -1,11 +1,11 @@
-# Johnstone Park Combined Clubrooms — shared Quarto calendar (stage 1.3)
+# Johnstone Park Combined Clubrooms — shared Quarto calendar (stage 1.4)
 
 Website: https://jpcrooms.github.io/jpcc/
 
 This version replaces the duplicated event JavaScript in `index.qmd` and
 `events.qmd` with **one shared script**, `assets/js/jpcc-events.js`.
 It keeps public events and room hire data separate so a two-room booking
-calendar can be added without rewriting the event engine. Stage 1.3 adds a room-hire enquiry form.
+calendar can be added without rewriting the event engine. Stage 1.3 added a room-hire enquiry form; Stage 1.4 improves submission handling and adds hall photo galleries.
 
 ## Files and responsibilities
 
@@ -15,7 +15,10 @@ calendar can be added without rewriting the event engine. Stage 1.3 adds a room-
 | `events.json` | One-off, public events that should appear on the website calendar |
 | `data/rooms.json` | Names and IDs of the building's two rooms |
 | `bookings.json` | Manually confirmed room-hire records (currently empty; **not** automatically populated by form submissions) |
-| `room-hire.qmd` | Public hall descriptions and the Formspree enquiry form |
+| `room-hire.qmd` | Public hall descriptions, photo galleries and the Formspree enquiry form |
+| `room-hire-thank-you.qmd` | Success page after an accepted enquiry |
+| `hall-photos-source/large`, `hall-photos-source/small` | Put hall photos here, including HEIC originals on a Mac |
+| `scripts/build-hall-photos.py` | Builds thumbnails/links manifest and converts HEIC to JPEG on macOS |
 | `scripts/build-club-data.py` | Build helper: reads the individual club `.qmd` pages |
 | `data/clubs.json` | Generated output; **do not edit manually** |
 | `assets/js/jpcc-events.js` | Shared recurrence, event listing, calendar and room-conflict engine |
@@ -222,3 +225,75 @@ node --test tests/jpcc-events.test.js
 Tests cover both clubs, monthly/weekly recurrence, exclusions and intervals,
 recurrence beyond 2035, one-off events, seasonal-neutral Adelaide time labels,
 room occupancy, same-room collision detection and form validation wiring.
+
+## Stage 1.4 — Formspree submission handling and hall photographs
+
+### Form submission (the reported “render” box)
+
+Stage 1.3 sent the browser directly to Formspree after POST. The literal
+"render" box could not be reproduced from the supplied code; it is not an
+error message produced by the shared JavaScript. Formspree may display an
+external validation, spam, rate-limit or other response page. **Check whether
+Formspree has recorded the enquiry before trying again.**
+
+Stage 1.4 now uses the existing `assets/js/jpcc-events.js` to POST with
+`Accept: application/json`. It waits for an actual success response before
+navigating to `room-hire-thank-you.html`. Invalid fields, HTTP errors,
+rate-limiting and unexpected responses are displayed on the room-hire page,
+without discarding the form values. The submit button is temporarily disabled
+to avoid accidental duplicate requests. Without JavaScript, the ordinary HTML
+form POST remains available.
+
+The endpoint remains `https://formspree.io/f/meagqraw`.
+
+**Formspree dashboard redirect (recommended for native fallback):** On a plan
+with custom redirects, open the form in Formspree → Settings → Thank You
+redirect, and paste the complete published URL for your site's
+`room-hire-thank-you.html` page. If the website remains at the URL shown
+at the top of this README, that would be
+`https://jpcrooms.github.io/jpcc/room-hire-thank-you.html`. This is an **account setting**, not a hidden
+`_next` field. With JavaScript active, the website performs its own redirect
+after a successful JSON response; the Formspree dashboard redirect is still a
+useful fallback for visitors without JavaScript. On plans without custom
+redirects, the JavaScript success page still works.
+
+Important: changing the redirect does **not** resolve a Formspree-side form
+validation or anti-spam rejection. If a subsequent test produces an inline
+error, check the Formspree submissions and spam settings, and capture the
+exact error message. No live submission has been made during development.
+
+### Hall photographs (HEIC supported on a Mac)
+
+Two optional photo galleries have been added, with **clickable thumbnails**
+that open the original converted public image at a larger size. Photos are not
+yet supplied, so the page shows explanatory text until you add photos.
+
+1. Put photos of the Large Hall in `hall-photos-source/large/`.
+2. Put photos of the Small Hall in `hall-photos-source/small/`.
+3. Run `quarto render` (automatically runs `scripts/build-hall-photos.py`) or
+   run `python3 scripts/build-hall-photos.py` separately.
+4. The site builds `assets/hall-photos/manifest.json` and copies web images to
+   `assets/hall-photos/large/` and `assets/hall-photos/small/`.
+5. Publish the resulting `docs/` website. Thumbnails and full-size links
+   automatically appear on the Room Hire page.
+
+**Mac HEIC support:** `build-hall-photos.py` uses `sips` (installed with macOS)
+to convert `.heic`/`.heif` to JPEG. For users without `sips`, use a local image
+converter or export the HEIC files as JPEG/WebP first. The conversion has not
+been exercised on real hall photos in this package. Keep original HEIC files
+in the `hall-photos-source` folders rather than linking them directly.
+
+The hall cards also have **Select Large Hall** / **Select Small Hall** links;
+these fill in the hall field in the enquiry form. Original names, contents,
+recurring-event settings, room IDs and booking logic are otherwise unchanged.
+
+### Stage 1.4 validation
+
+```
+node --test tests/jpcc-events.test.js
+python3 -m unittest discover -s tests -p 'test_*.py' -v
+```
+
+The Quarto CLI is not installed in the test environment, so a real rendered
+browser deployment and a Formspree submission still require testing on your
+published website.

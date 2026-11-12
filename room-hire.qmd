@@ -14,11 +14,19 @@ The clubrooms at **12 Thomas Street, Murray Bridge SA 5253** are available for h
     <h3>Large Hall</h3>
     <p class="room-hire-capacity">Up to 80 people seated</p>
     <p>Suitable for larger functions, workshops and community gatherings.</p>
+    <div class="room-hire-photos" data-hall-photos="large" aria-label="Large Hall photographs">
+      <p class="room-hire-photo-empty">Photographs of the Large Hall will be added here.</p>
+    </div>
+    <a class="room-hire-select" href="#jpcc-room-hire-form" data-select-hall="Large Hall">Select Large Hall for enquiry</a>
   </section>
   <section class="room-hire-option">
     <h3>Small Hall</h3>
     <p class="room-hire-capacity">Up to 25 people seated</p>
     <p>Suitable for smaller meetings, board games and club catch-ups.</p>
+    <div class="room-hire-photos" data-hall-photos="small" aria-label="Small Hall photographs">
+      <p class="room-hire-photo-empty">Photographs of the Small Hall will be added here.</p>
+    </div>
+    <a class="room-hire-select" href="#jpcc-room-hire-form" data-select-hall="Small Hall">Select Small Hall for enquiry</a>
   </section>
 </div>
 ```
@@ -132,7 +140,8 @@ Complete the form to send a **booking enquiry** to the clubrooms committee. We w
 
   <p class="room-hire-privacy">Your contact and enquiry details will be sent to the clubrooms organisers through Formspree for the purpose of responding to your request. Do not include payment card details or other sensitive information.</p>
   <p><button class="room-hire-submit" type="submit">Send room hire enquiry</button></p>
-  <p class="room-hire-help">Fields marked * are required. After submission, Formspree will display the submission result.</p>
+  <p id="hire-form-status" class="room-hire-status" role="status" aria-live="polite" hidden></p>
+  <p class="room-hire-help">Fields marked * are required. We will show a confirmation only after Formspree accepts the enquiry. A submission is not a confirmed booking.</p>
 </form>
 ```
 

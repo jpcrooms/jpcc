@@ -1,0 +1,13 @@
+---
+title: "Room Hire Enquiry Received"
+subtitle: "Johnstone Park Combined Club Rooms — Murray Bridge"
+toc: false
+---
+
+Thank you. **Your room hire enquiry has been received.**
+
+The clubrooms organisers will review your request and contact you about hall availability, fees and any additional cleaning charges.
+
+**This is not yet a confirmed booking.** Please wait for confirmation before making arrangements that depend on the hall being available.
+
+[Return to Room Hire](room-hire.qmd) · [Return to Home](index.qmd)
